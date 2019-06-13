@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 {
 	int pid = 0;
 	int pids[] = {0,0,0};
-	int total_work = 100;
+	int total_work = 10;
 	/* Argument validation test. */
 	if (argc != 4)
 	{
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 		}else
 		{
 			/* Child */			
-			while (total_work >= 0)
+			while (total_work > 0)
 			{
 				if (!start)
 					pause();
@@ -85,6 +85,10 @@ int main(int argc, char** argv)
 	
 	if (pid)
 	{
+		printf("Sleeping for 3 secs...");
+		fflush(stdout);
+		sleep(3);
+		printf("Done!\n");
 		/* Parent */
 		int ids[] = {PROC_NUM, PROC_NUM - 1, PROC_NUM - 2};
 		int remain[] = {total_work, total_work, total_work};
@@ -93,7 +97,7 @@ int main(int argc, char** argv)
 		/* While there is at least one process still having work to do. */
 		while (1)
 		{
-			if (remain[j] >= 0)
+			if (remain[j] > 0)
 			{
 				kill(pids[ids[j]-1], SIGUSR1);
 				sleep(time[ids[j]-1]);
