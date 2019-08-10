@@ -6,7 +6,7 @@
 #include <grp.h>
 #include <dirent.h>
 
-static size_t total = 0;
+static size_t total;
 
 static void printRights(struct stat *st)
 {
@@ -65,11 +65,11 @@ static void printRights(struct stat *st)
 
 static void printUserGroup(struct stat *st)
 {
-    if (!st)
-		return;
-  
-    struct passwd *pw;
+	struct passwd *pw;
     struct group *gr;
+
+	if (!st)
+		return;
 
     pw = getpwuid(st->st_uid);
     if (!pw)
@@ -90,19 +90,16 @@ static void printUserGroup(struct stat *st)
 
 static void printtime(struct stat *st)
 {
+	struct tm *t = localtime(&st->st_mtime);
+	char buf[255];
     if (!st)
 		return;
-  
-    size_t size = 100;
-    struct tm *t = localtime(&st->st_mtime);
     if (!t)
     {
 		fprintf(stderr, "ERROR: localtime\n");
 		return;
     }
-    char buf[size];
-  
-    strftime(buf, size, "%b %d %H:%M", t);
+    strftime(buf, 255, "%b %d %H:%M", t);
     printf(" %s", buf);
 }
 
@@ -124,9 +121,8 @@ static void printhardlinks(struct stat *st)
 
 static void printInfo(const char *name, const char *path, unsigned char isDir)
 {
-    size_t size = 255;
     struct stat buf;
-    char fullpath[size];
+    char fullpath[255];
 
     sprintf(fullpath, "%s/%s", path, name);
     if (stat(fullpath, &buf) < 0)
