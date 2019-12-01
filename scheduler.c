@@ -23,13 +23,10 @@ static int start = 0; /* The flag that indicates whether to start working or not
 void sig_handler(int sid)
 {
     if (sid == SIGUSR1)
-    {
         start = 1;
-    }
     else if (sid == SIGUSR2)
-    {
         start = 0;
-    }
+    signal(sid, sig_handler);
 }
 
 int main(int argc, char** argv)
