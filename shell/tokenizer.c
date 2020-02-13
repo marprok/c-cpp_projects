@@ -13,7 +13,7 @@ void reset_bucket(bucket_t *bucket)
     /* Reset the bucket state */
     bucket->m_size = 0;
     for (i = 0; i < BUCKET_SIZE; ++i)
-        memset(bucket->m_storage[i], 0, sizeof(char)*sizeof(TOKEN_SIZE));
+        memset(bucket->m_storage[i], 0, sizeof(char)*TOKEN_SIZE);
     memset(bucket->m_bucket, 0, sizeof(char*)*BUCKET_SIZE);
 }
 
