@@ -2,19 +2,18 @@
 
 int main(void)
 {
-    int c, in_word = 0, print_nl = 0;
+    int c, in_word = 0;
     while ((c = getchar()) != EOF)
     {
-        in_word = c != ' ' && c != '\n' && c != '\t';
-        if (in_word)
+        if (c != ' ' && c != '\n' && c != '\t')
         {
             putchar(c);
-            print_nl = 1;
+            in_word = 1;
         }
-        else if (print_nl)
+        else if (in_word)
         {
             putchar('\n');
-            print_nl = 0;
+            in_word = 0;
         }
     }
 
